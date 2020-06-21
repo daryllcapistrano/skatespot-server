@@ -49,6 +49,7 @@ updateSkatepark = async (req, res) => {
         message: "Skatepark not found",
       });
     }
+
     skatepark.name = body.name;
     skatepark.terrian = body.terrian;
     skatepark.location = body.location;
@@ -56,20 +57,20 @@ updateSkatepark = async (req, res) => {
     skatepark.state = body.state;
     skatepark.country = body.country;
     skatepark.rating = body.rating;
+
     skatepark.save().then(() => {
-      return res
-        .status(200)
-        .json({
-          success: true,
-          id: skatepark._id,
-          message: "Skatepark updated",
-        })
-        .catch((error) => {
-          return res.status(404).json({
-            error,
-            message: "Skatepark not updated",
-          });
-        });
+      return res.status(200).json({
+        success: true,
+        id: skatepark._id,
+        message: "Skatepark updated!",
+      });
+      // ! comment out to clear UnhandledPromiseRejectionWarning
+      // ! fix to catch error properly
+      // .catch(() => {
+      //   return res.status(404).json({
+      //     message: "Skatepark not updated!",
+      //   });
+      // });
     });
   });
 };
@@ -83,18 +84,11 @@ deleteSkatepark = async (req, res) => {
     if (!skatepark) {
       return res
         .status(404)
-        .json({ success: false, error: "Skatepark not found" });
+        .json({ success: false, error: `Skatepark not found` });
     }
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        data: skatepark,
-        message: "Skatepark deleted",
-      })
-      .catch((err) => console.log(err));
-  });
+    return res.status(200).json({ success: true, data: skatepark });
+  }).catch((err) => console.log(err));
 };
 
 getSkateparkById = async (req, res) => {
