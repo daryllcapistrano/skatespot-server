@@ -10,6 +10,7 @@ const Skatepark = new Schema(
     state: { type: String, required: true },
     country: { type: String, required: true },
     rating: { type: Number, required: false },
+    image: { type: String, required: false },
   },
   { timestamps: true }
 );
